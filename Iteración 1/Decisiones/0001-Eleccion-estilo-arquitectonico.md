@@ -1,13 +1,14 @@
-# Elección de arquiterctura de cliente-servidor
+# Elección del estilo de la arquitectura utilizada
 * Status: Accepted
-* Date: 2024-11-12
+* Date: 
 * Decision-Makers: Alejandro Rico, Elena Ceinos
 * Consulted: Gaizka Aranbarri, Alberto Acebes
 * Informed: Jon Mazcuñán, Daniel Rong, Pablo Villamayor
 ---
 
 ## Context and Problem Statement
-La empresa pretende migrar de una 
+La empresa de productos alimenticios busca migrar su arquitectura monolítica hacia una basada en microservicios para mejorar la flexibilidad y escalabilidad del sistema. Actualmente, el sistema cuenta con clientes en PC y móvil que acceden a una base de datos SQL. El acceso a los datos se realizará a través de HTTP/REST mediante un Gateway adecuado, permitiendo una comunicación eficiente entre los clientes y los distintos servicios.
+ 
 
 ## Considered Options
 
