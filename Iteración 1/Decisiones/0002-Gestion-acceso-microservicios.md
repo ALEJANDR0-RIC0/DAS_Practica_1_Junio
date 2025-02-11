@@ -1,6 +1,6 @@
 # Elección del patrón utilizado para el acceso de los usuarios a los microservicios
 * Status: Accepted
-* Date: 
+* Date: 7/02/2025
 * Decision-Makers: Alejandro Rico, Elena Ceinos
 * Consulted: Gaizka Aranbarri, Alberto Acebes
 * Informed: Jon Mazcuñán, Daniel Rong, Pablo Villamayor
@@ -19,6 +19,7 @@ Para resolver este problema, se evalúa el uso de un **API Gateway**, que actuar
 ## Drivers de Decisión
 
 * **RF-01:** Gestión centralizada de peticiones a microservicios.
+* **RD-04:** Uso de la API Gateway.
 
 ## Decision Outcome
 
