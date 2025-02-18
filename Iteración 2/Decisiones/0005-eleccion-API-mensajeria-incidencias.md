@@ -22,21 +22,21 @@ Se necesita seleccionar una API de mensajería adecuada para gestionar las incid
 
 ## Pros and Cons of the Options
 
-### 0012-1-Twilio
+### 0005-1-Twilio
 
 * **Good** porque ofrece una integración sencilla y rápida para notificaciones SMS.  
 * **Good** porque es altamente fiable y escalable, con soporte global.  
 * **Bad** porque introduce un costo recurrente por cada mensaje enviado.  
 * **Bad** porque puede ser costoso si el volumen de mensajes es alto.  
 
-### 0012-2-Slack
+### 0005-2-Slack
 
 * **Good** porque permite enviar mensajes en tiempo real a canales específicos.  
 * **Good** porque es ampliamente utilizado y tiene una buena documentación y soporte.  
 * **Bad** porque requiere que los usuarios estén en la plataforma Slack.  
 * **Bad** porque puede no ser ideal para notificaciones SMS.  
 
-### 0012-3-Telegram
+### 0005-3-Telegram
 
 * **Good** porque permite enviar mensajes en tiempo real y es gratuito.  
 * **Good** porque tiene una API robusta y es fácil de integrar.  
@@ -45,7 +45,7 @@ Se necesita seleccionar una API de mensajería adecuada para gestionar las incid
 
 ## Decision Outcome
 
-* **Chosen option: "0012-2-Twilio"**  
+* **Chosen option: "0005-2-Twilio"**  
 Se ha decidido utilizar Twilio para las notificaciones SMS debido a su fiabilidad, escalabilidad, facilidad de integración y la gran flexibilidad para añadir más funcionalidades. Aunque introduce un costo recurrente, se considera que los beneficios superan los inconvenientes.
 
 ### Positive Consequences
