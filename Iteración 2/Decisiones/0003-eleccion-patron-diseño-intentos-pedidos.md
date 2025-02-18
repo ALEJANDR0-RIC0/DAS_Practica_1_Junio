@@ -18,7 +18,7 @@ El sistema de pedidos es un componente crítico en la nueva arquitectura basada 
 ## Drivers de Decisión
 
 * **RF-03: Realizar pedidos de los productos de la empresa**
-* **RD-03.1: Gestionar intentos máximos de los pedidos**
+* **RF-03.1: Gestionar intentos máximos de los pedidos**
 
 ### Consequences
 
