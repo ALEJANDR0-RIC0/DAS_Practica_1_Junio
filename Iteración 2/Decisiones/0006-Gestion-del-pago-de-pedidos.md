@@ -16,8 +16,9 @@ Además se necesita un factor extra de seguridad, encriptar los datos de las tar
 
 ## Drivers de decisión
 
-* RF-08: Pagar un pedido a través de una plataforma de pago
-* RF-08.1: Encriptar los datos de la tarjeta y limitar el tiempo de pago
+* **RF-08: Pagar un pedido a través de una plataforma de pago**
+* **RF-08.1: Encriptar los datos de la tarjeta y limitar el tiempo de pago**
+* **RD-03: Sistema de pago seguro utilizando Stripe**
 
 ## Considered Options
 
