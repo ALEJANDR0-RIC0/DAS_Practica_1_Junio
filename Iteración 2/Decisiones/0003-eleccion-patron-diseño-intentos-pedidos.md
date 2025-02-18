@@ -38,7 +38,7 @@ El sistema de pedidos es un componente crítico en la nueva arquitectura basada 
 * **Bad** porque añade un nivel adicional de complejidad en la lógica de negocio del módulo de pedidos.
 
 ## Decision Outcome
-Chosen option: **"0003-2-Utilizar patrón State"**
+**Chosen option: "0003-2-Utilizar patrón State"**
 Se implementará un sistema basado en el patrón State donde cada intento de pedido tendrá un estado asociado y las transiciones se manejarán mediante una capa de control en caché. Esto garantizará un control claro sobre los intentos y permitirá modificaciones futuras sin afectar el resto del sistema.
 
 ## Positive consequences
