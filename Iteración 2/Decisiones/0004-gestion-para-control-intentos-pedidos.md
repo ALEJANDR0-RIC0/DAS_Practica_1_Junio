@@ -12,8 +12,8 @@ El sistema de pedidos es un componente crítico en la nueva arquitectura basada 
 
 ## Considered Options
 
-* **0003-1-Utilizar patrón Circuit Braker**
-* **0003-2-Utilizar patrón State**
+* **0004-1-Utilizar patrón Circuit Braker**
+* **0004-2-Utilizar patrón State**
 
 ## Drivers de Decisión
 
@@ -24,21 +24,21 @@ El sistema de pedidos es un componente crítico en la nueva arquitectura basada 
 
 ## Pros and Cons of the Options
 
-### 0003-1-Utilizar patrón Circuit Breaker
+### 0004-1-Utilizar patrón Circuit Breaker
 
 * **Good** porque permite evitar sobrecarga del sistema al bloquear intentos fallidos automáticamente.
 * **Good** porque es una solución ampliamente utilizada en entornos de microservicios para garantizar estabilidad.
 * **Bad** porque está diseñado más para gestionar fallos en servicios externos, no tanto para la lógica interna del negocio.
 * **Bad** porque la lógica de intentos de pedido quedaría acoplada a la infraestructura en lugar de estar modelada en la aplicación.
 
-### 0003-2-Utilizar patrón State
+### 0004-2-Utilizar patrón State
 * **Good** porque permite modelar de manera clara cada intento y controlar el flujo sin afectar otros microservicios.
 * **Good** porque se puede integrar con una caché distribuida (ej. Redis) para mejorar rendimiento sin sobrecargar la base de datos.
 * **Bad** porque requiere más código para gestionar transiciones de estado.
 * **Bad** porque añade un nivel adicional de complejidad en la lógica de negocio del módulo de pedidos.
 
 ## Decision Outcome
-**Chosen option: "0003-2-Utilizar patrón State"**
+**Chosen option: "0004-2-Utilizar patrón State"**
 Se implementará un sistema basado en el patrón State donde cada intento de pedido tendrá un estado asociado y las transiciones se manejarán mediante una capa de control en caché. Esto garantizará un control claro sobre los intentos y permitirá modificaciones futuras sin afectar el resto del sistema.
 
 ## Positive consequences
