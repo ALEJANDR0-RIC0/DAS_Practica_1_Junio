@@ -18,8 +18,8 @@ Para resolver este problema, se evalúa el uso de un **API Gateway**, que actuar
 
 ## Drivers de Decisión
 
-* **RF-01:** Gestión centralizada de peticiones a microservicios.
-* **RD-04:** Uso de la API Gateway.
+* **RF-01.1:** Gestión centralizada de peticiones a microservicios.
+* **RD-01.2:** Uso de la API Gateway.
 
 ## Decision Outcome
 
