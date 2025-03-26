@@ -22,11 +22,11 @@ Además se necesita un factor extra de seguridad, encriptar los datos de las tar
 
 ## Considered Options
 
-* **0006-1-Stripe**
+* **0005-1-Stripe**
 
 ## Pros and Cons of the Options
 
-### 0006-1-Stripe
+### 0005-1-Stripe
 
 * **Good** porque permite la implementación de medidas adicionales de seguridad como la encriptación de datos de tarjetas y la limitación del tiempo de pago, lo que reduce el riesgo de fraude.
 * **Good** porque ofrece una API moderna y fácil de integrar con sistemas basados en microservicios.
@@ -37,7 +37,7 @@ Además se necesita un factor extra de seguridad, encriptar los datos de las tar
 
 ## Decision Outcome
 
-* **Chosen option: "0006-1-Stripe"**
+* **Chosen option: "0005-1-Stripe"**
 Se ha decidido utilizar Stripe como la pasarela de pago principal debido a su fácil integración con la arquitectura basada en microservicios, altos estándares de seguridad y soporte para múltiples métodos de pago. Aunque introduce ciertas tarifas, su fiabilidad y escalabilidad justifican la elección.
 
 ### Positive Consequences
