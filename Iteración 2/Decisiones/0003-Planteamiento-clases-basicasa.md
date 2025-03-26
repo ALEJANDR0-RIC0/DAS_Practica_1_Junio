@@ -1,6 +1,6 @@
 # Decisión sobre las clases principales a añadir
 * Status: Accepted
-* Date: 26/03/2025
+* Date: 10/02/2025
 * Decision-Makers: Elena Ceinos, Alejandro Rico
 * Consulted: Gaizka Aranbarri, Alberto Acebes
 * Informed: Jon Mazcuñán, Daniel Rong, Pablo Villamayor
