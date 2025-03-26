@@ -39,7 +39,7 @@ El sistema de pedidos es un componente crítico en la nueva arquitectura basada 
 
 ## Decision Outcome
 **Chosen option: "0004-2-Utilizar patrón State"**
-Se implementará un sistema basado en el patrón State donde cada intento de pedido tendrá un estado asociado y las transiciones se manejarán mediante una capa de control en caché. Esto garantizará un control claro sobre los intentos y permitirá modificaciones futuras sin afectar el resto del sistema.
+Se implementará un sistema basado en el patrón State donde cada intento de pedido tendrá un estado asociado y las transiciones se manejarán mediante una capa de control en caché. Esto garantizará un control claro sobre los intentos y permitirá modificaciones futuras sin afectar el resto del sistema. Los estados posibles son: iniciado, 1er intento, 2º intento, 3er intento, fallido, expirado y completado.
 
 ## Positive consequences
 * Se mantiene un control preciso de los intentos por usuario.
