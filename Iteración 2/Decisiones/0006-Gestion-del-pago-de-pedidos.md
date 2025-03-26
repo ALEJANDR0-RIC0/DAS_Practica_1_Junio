@@ -38,7 +38,7 @@ Además se necesita un factor extra de seguridad, encriptar los datos de las tar
 ## Decision Outcome
 
 * **Chosen option: "0006-1-Stripe"**
-Se ha decidido utilizar Stripe como la pasarela de pago principal debido a su fácil integración con la arquitectura basada en microservicios, altos estándares de seguridad y soporte para múltiples métodos de pago. Aunque introduce ciertas tarifas, su fiabilidad y escalabilidad justifican la elección.
+Se ha decidido utilizar Stripe como la pasarela de pago principal debido a su fácil integración con la arquitectura basada en microservicios, altos estándares de seguridad y soporte para múltiples métodos de pago. Aunque introduce ciertas tarifas, su fiabilidad y escalabilidad justifican la elección. Habrá que importar la API de Stripe con sus clases.
 
 ### Positive Consequences
 
