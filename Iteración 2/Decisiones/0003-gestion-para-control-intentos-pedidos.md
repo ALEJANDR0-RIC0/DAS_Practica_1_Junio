@@ -1,4 +1,4 @@
-# Elección del patrón de diseño para los intentos al realizar un pedido
+# Cómo gestionar la cantidad de intentos de un usuario
 * Status: Accepted
 * Date: 11/02/2025
 * Decision-Makers: Alejandro Rico, Elena Ceinos
