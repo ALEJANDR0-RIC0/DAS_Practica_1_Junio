@@ -1,100 +1,86 @@
-# Gestión de Rutas para Camiones
+# **Decisión: Arquitectura del Algoritmo de Planificación de Rutas**
 
-* Status: Acepted  
-* Date: 28/05/2025  
-* Decision-Makers: Alejandro Rico, Elena Ceinos  
-* Consulted: Gaizka Aranbarri, Alberto Acebes  
-* Informed: Jon Mazcuñán, Daniel Rong, Pablo Villamayor  
-
----
-
-## Context and Problem Statement
-
-En una empresa de logística con una flota de más de 100 camiones, los problemas operativos (averías mecánicas, retrasos, rutas bloqueadas, etc.) generan pérdidas significativas cuando no se resuelven rápidamente.
-
-El microservicio de **Reparto** debe optimizar la asignación de rutas a camiones, considerando:
-
-- 📍 Ubicaciones de pedidos (destinos)  
-- 🚚 Flota disponible (capacidad, ubicación actual)  
-- ⏱️ Restricciones logísticas (tiempos de entrega, tráfico)
+* **Status:** Aprobado  
+* **Fecha:** 28/05/2025  
+* **Decision-Makers:** Alejandro Rico, Elena Ceinos  
+* **Consulted:** Gaizka Aranbarri, Alberto Acebes  
+* **Informed:** Jon Mazcuñán, Daniel Rong, Pablo Villamayor  
 
 ---
 
-## Drivers de decisión
+## **1. Contexto**  
+El microservicio de **Reparto** requiere un algoritmo para optimizar rutas de camiones, integrado con:  
+- Datos de pedidos (ubicaciones, prioridades).  
+- Flota disponible (capacidad, ubicación actual).  
+- Eventos en tiempo real (incidencias, tráfico).  
 
-* RF-04: Gestionar el reparto y las rutas de los camiones  
-* Escalabilidad y flexibilidad en la planificación de rutas dinámicas  
-* Compatibilidad con arquitectura basada en eventos y microservicios
-
----
-
-## Considered Options
-
-* **0009-1-Vehicle Routing Problem (VRP) + Strategy Pattern + Event-Driven**
-* **0009-2-Algoritmo de Clarke-Wright (Ahorros)**
-* **0009-3-Algoritmos Genéticos**
-* **0009-4-Colonia de Hormigas (ACO)**
+**Requisitos clave:**  
+-**Desacoplamiento**: No afectar a otros servicios (Pedidos, Clientes).  
+-**Flexibilidad**: Cambiar algoritmos fácilmente (ej: de Dijkstra a OR-Tools).  
+- **Escalabilidad**: Manejar picos de pedidos.  
 
 ---
 
-## Pros and Cons of the Options
+## **2. Opciones Evaluadas**
 
-### 0009-1-Vehicle Routing Problem (VRP) + Strategy Pattern + Event-Driven
-
-* **Good**  
-  - Estándar en la industria  
-  - Integra bien con eventos (Kafka)  
-  - Permite cambiar algoritmos (Dijkstra → OR-Tools) sin modificar la lógica de negocio  
-  - Aislado del resto del sistema mediante interfaz `IRutaStrategy`  
-* **Bad**  
-  - Diseño inicial más complejo  
-  - Configuración técnica de OR-Tools
-
-### 0009-2-Algoritmo de Clarke-Wright (Ahorros)
-
-* **Good**  
-  - Simple y rápido para problemas medianos  
-* **Bad**  
-  - No óptimo para restricciones complejas (tiempos, ventanas)
-
-### 0009-3-Algoritmos Genéticos
-
-* **Good**  
-  - Adaptables a entornos no lineales  
-* **Bad**  
-  - Requiere tuning fino  
-  - Difícil de mantener a largo plazo
-
-### 0009-4-Colonia de Hormigas (ACO)
-
-* **Good**  
-  - Fuerte en entornos cambiantes  
-* **Bad**  
-  - Costo computacional alto  
-  - Requiere mucha calibración
+### **Opción 1: Strategy Pattern + Event-Driven**  
+**Descripción:**  
+Se utiliza el patrón Strategy para encapsular diferentes algoritmos de optimización de rutas (por ejemplo, Dijkstra, OR-Tools), lo que permite cambiar el algoritmo sin modificar la lógica del servicio. Se complementa con un enfoque Event-Driven donde el microservicio de Reparto reacciona a eventos (ej: PedidoConfirmado) para disparar el cálculo de rutas. 
+**Good**Bajo acoplamiento: El microservicio depende de una interfaz, no del algoritmo concreto.  
+**Good**Extensible: Nuevos algoritmos se añaden sin modificar el código existente.  
+**Good**Integración limpia: Se activa por eventos (ej: PedidoConfirmado → CalcularRuta).   
+**bad**Complejidad inicial: Requiere diseñar la interfaz y adaptadores.  
 
 ---
 
-## Decision Outcome
+### **Opción 2: Servicio Externo (API REST)**  
+**Descripción:**  
+Un microservicio especializado (ej: Python + OR-Tools) expuesto como API REST, donde se centraliza el cálculo de rutas. El servicio de Reparto realiza una llamada HTTP para obtener la ruta optimizada.
+ 
+**Good** Escalabilidad independiente: El servicio de rutas escala según demanda.  
+**Good**Lenguaje óptimo: Uso de librerías específicas (ej: OR-Tools para Python).  
 
-* **Chosen Option: 0009-1 - Vehicle Routing Problem (VRP) + Strategy Pattern + Event-Driven**
-
-Se implementará el VRP como núcleo del sistema de planificación de rutas, usando una arquitectura basada en el patrón **Strategy** y comunicación **Event-Driven** con Kafka. El algoritmo podrá ser sustituido o evolucionado (ej: Dijkstra → OR-Tools → heurísticas) sin impactar el sistema principal.
-
----
-
-### Positive Consequences
-
-* 🧠 **Desacoplamiento**: Cambios en el algoritmo no afectan al resto del sistema  
-* ⚙️ **Testabilidad**: `IRutaStrategy` se puede mockear en pruebas unitarias  
-* 🚀 **Flexibilidad**: Integración progresiva de OR-Tools, posibilidad de probar múltiples estrategias  
-* 🧩 **Compatibilidad técnica**: Usa infraestructura existente (Kafka, microservicios)
+**Contras:**  
+**bad**Latencia: Llamadas HTTP añaden overhead.  
+**bad**Dependencia externa: Si falla, afecta a Reparto.  
 
 ---
 
-### Negative Consequences
+### **Opción 3: Saga + CQRS**  
+**Descripción:**  
+Se utiliza un patrón Saga para coordinar el flujo de eventos entre los microservicios de Pedidos y Reparto, y CQRS para separar consultas y comandos (optimización de rutas vs. obtener rutas).
 
-* 🔧 **Sobrecoste inicial**: Diseño de interfaz y estructura de eventos  
-* 💻 **Dependencia técnica**: Necesidad de dominar OR-Tools o herramientas similares  
-* 🧪 **Iteración de parámetros**: Requiere pruebas para ajuste óptimo
+**Pros:**  
+**Good**Consistencia eventual: Ideal para procesos asíncronos largos.  
+**Good**Escalabilidad de lecturas.  
 
+**Contras:**  
+**bad**Complejidad alta: Requiere diseñar modelos separados.  
+
+---
+
+## **4. Decisión Final**  
+**Elegido:** **Strategy Pattern + Event-Driven**  
+Razones:  
+- Alineación con la arquitectura actual: Ya se utiliza Event-Driven (Kafka) y microservicios independientes.  
+- Flexibilidad: Permite empezar con un algoritmo simple (ej: Dijkstra) y migrar a uno complejo (OR-Tools) sin cambios en el código del servicio.  
+- Bajo riesgo: No introduce dependencias externas críticas.  
+
+---
+
+## **6. Consecuencias**  
+### **Positivas:**  
+- **Desacoplamiento**: El servicio de Reparto no sabe qué algoritmo se utiliza.  
+- **Escalabilidad**: Facilidad de cambiar y escalar los algoritmos de optimización sin impactar otros servicios.
+
+### **Negativas:**  
+- **Overhead inicial**: Se requiere una fase de diseño y adaptación para crear interfaces y adaptadores.
+
+---
+
+## **7. Relación con otras decisiones**  
+- **Base de Datos**: PostgreSQL será utilizado como gestor SQL para todos los microservicios (Decisión 0007.1).  
+- **Patrón Event-Driven**: Usará Kafka o RabbitMQ para gestionar los eventos (Decisión 0007.2).  
+- **Patrón Saga**: Para gestionar la compensación en caso de fallo en el cálculo de rutas (Decisión 0007.3).
+
+---
