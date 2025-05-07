@@ -57,8 +57,7 @@ Se utiliza un patrón Saga para coordinar el flujo de eventos entre los microser
 ## **3. Decisión Final**  
 **Elegido:** **Strategy Pattern + Event-Driven**  
 Razones:  
-- Alineación con la arquitectura actual: Ya se utiliza Event-Driven (Kafka) y microservicios independientes.  
-- Flexibilidad: Permite empezar con un algoritmo simple (ej: Dijkstra) y migrar a uno complejo (OR-Tools) sin cambios en el código del servicio.  
+- Flexibilidad: Permite empezar con un algoritmo simple y migrar a uno complejo (OR-Tools) sin cambios en el código del servicio.  
 - Bajo riesgo: No introduce dependencias externas críticas.  
 
 ---
