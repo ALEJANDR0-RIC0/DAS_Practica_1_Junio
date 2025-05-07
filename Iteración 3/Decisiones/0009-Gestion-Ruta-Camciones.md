@@ -1,7 +1,7 @@
 # Gestión de Rutas para Camiones
 
-*Status: Acepted
-*Date: 28/05/2025
+* Status: Acepted
+* Date: 28/05/2025
 * Decision-Makers: Alejandro Rico, Elena Ceinos
 * Consulted: Gaizka Aranbarri, Alberto Acebes
 * Informed: Jon Mazcuñán, Daniel Rong, Pablo Villamayor
@@ -13,9 +13,9 @@ En una empresa de logística con una flota de más de 100 camiones, los problema
 
 ## Drivers de decisión
 
-*RF-04: Gestionar el reparto y las rutas de los camiones
+* RF-04: Gestionar el reparto y las rutas de los camiones
 
-##Considerer Options
+### Considerer Options
 
 * **0009-1-Vehicle Routing Problem (VRP)**
    - Variantes: CVRP (capacidad), VRPTW (ventanas de tiempo), DVRP (dinámico).
@@ -53,6 +53,6 @@ En una empresa de logística con una flota de más de 100 camiones, los problema
 
 ### Positive Consequences
 
-*Costo computacional: En problemas muy grandes (1000+ paradas), el VRP exacto puede ser lento
+* Costo computacional: En problemas muy grandes (1000+ paradas), el VRP exacto puede ser lento
 * Dependencia de solvers externos: OR-Tools/Optaplanner requieren aprendizaje técnico y licencias en entornos empresariales.
 * Complejidad de configuración:Ajustar parámetros demanda pruebas iterativas.
