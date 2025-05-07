@@ -54,7 +54,7 @@ Se utiliza un patrón Saga para coordinar el flujo de eventos entre los microser
 
 ---
 
-## **4. Decisión Final**  
+## **3. Decisión Final**  
 **Elegido:** **Strategy Pattern + Event-Driven**  
 Razones:  
 - Alineación con la arquitectura actual: Ya se utiliza Event-Driven (Kafka) y microservicios independientes.  
@@ -63,7 +63,7 @@ Razones:
 
 ---
 
-## **6. Consecuencias**  
+## **4. Consecuencias**  
 ### **Positivas:**  
 - **Desacoplamiento**: El servicio de Reparto no sabe qué algoritmo se utiliza.  
 - **Escalabilidad**: Facilidad de cambiar y escalar los algoritmos de optimización sin impactar otros servicios.
@@ -73,9 +73,6 @@ Razones:
 
 ---
 
-## **7. Relación con otras decisiones**  
+## **5. Relación con otras decisiones**  
 - **Base de Datos**: PostgreSQL será utilizado como gestor SQL para todos los microservicios (Decisión 0007.1).  
-- **Patrón Event-Driven**: Usará Kafka o RabbitMQ para gestionar los eventos (Decisión 0007.2).  
-- **Patrón Saga**: Para gestionar la compensación en caso de fallo en el cálculo de rutas (Decisión 0007.3).
-
 ---
