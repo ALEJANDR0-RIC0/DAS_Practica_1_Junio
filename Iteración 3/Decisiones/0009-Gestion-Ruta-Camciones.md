@@ -26,10 +26,10 @@ El microservicio de **Reparto** requiere un algoritmo para optimizar rutas de ca
 ### **Opción 1: Strategy Pattern + Event-Driven**  
 **Descripción:**  
 Se utiliza el patrón Strategy para encapsular diferentes algoritmos de optimización de rutas (por ejemplo, Dijkstra, OR-Tools), lo que permite cambiar el algoritmo sin modificar la lógica del servicio. Se complementa con un enfoque Event-Driven donde el microservicio de Reparto reacciona a eventos (ej: PedidoConfirmado) para disparar el cálculo de rutas. 
-**Good**Bajo acoplamiento: El microservicio depende de una interfaz, no del algoritmo concreto.  
-**Good**Extensible: Nuevos algoritmos se añaden sin modificar el código existente.  
-**Good**Integración limpia: Se activa por eventos (ej: PedidoConfirmado → CalcularRuta).   
-**bad**Complejidad inicial: Requiere diseñar la interfaz y adaptadores.  
+* **Good** Bajo acoplamiento: El microservicio depende de una interfaz, no del algoritmo concreto.  
+* **Good** Extensible: Nuevos algoritmos se añaden sin modificar el código existente.  
+* **Good** Integración limpia: Se activa por eventos (ej: PedidoConfirmado → CalcularRuta).   
+* **bad** Complejidad inicial: Requiere diseñar la interfaz y adaptadores.  
 
 ---
 
@@ -37,12 +37,10 @@ Se utiliza el patrón Strategy para encapsular diferentes algoritmos de optimiza
 **Descripción:**  
 Un microservicio especializado (ej: Python + OR-Tools) expuesto como API REST, donde se centraliza el cálculo de rutas. El servicio de Reparto realiza una llamada HTTP para obtener la ruta optimizada.
  
-**Good** Escalabilidad independiente: El servicio de rutas escala según demanda.  
-**Good**Lenguaje óptimo: Uso de librerías específicas (ej: OR-Tools para Python).  
-
-**Contras:**  
-**bad**Latencia: Llamadas HTTP añaden overhead.  
-**bad**Dependencia externa: Si falla, afecta a Reparto.  
+* **Good** Escalabilidad independiente: El servicio de rutas escala según demanda.  
+* **Good** Lenguaje óptimo: Uso de librerías específicas (ej: OR-Tools para Python).  
+* **bad**Latencia: Llamadas HTTP añaden overhead.  
+* **bad**Dependencia externa: Si falla, afecta a Reparto.  
 
 ---
 
@@ -50,12 +48,9 @@ Un microservicio especializado (ej: Python + OR-Tools) expuesto como API REST, d
 **Descripción:**  
 Se utiliza un patrón Saga para coordinar el flujo de eventos entre los microservicios de Pedidos y Reparto, y CQRS para separar consultas y comandos (optimización de rutas vs. obtener rutas).
 
-**Pros:**  
-**Good**Consistencia eventual: Ideal para procesos asíncronos largos.  
-**Good**Escalabilidad de lecturas.  
-
-**Contras:**  
-**bad**Complejidad alta: Requiere diseñar modelos separados.  
+* **Good**Consistencia eventual: Ideal para procesos asíncronos largos.  
+* **Good**Escalabilidad de lecturas.   
+* **bad**Complejidad alta: Requiere diseñar modelos separados.  
 
 ---
 
