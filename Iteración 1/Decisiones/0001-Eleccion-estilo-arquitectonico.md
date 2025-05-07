@@ -32,3 +32,18 @@ Chosen option: "0001-1-utilizar-arquitectura-cliente-servidor"
 
 * Requerimientos de conectividad: Los clientes necesitan una conexión constante y confiable para interactuar con el servidor, lo que podría ser problemático en áreas con baja conectividad.
 * Complejidad en la sincronización: Si los clientes necesitan operar parcialmente offline, mantener la consistencia de datos entre cliente y servidor añade complejidad.
+
+### Aplicaciones en la arquitectura
+En un diseño arquitectónico de software basado en cuatro capas, estas se dividen de la siguiente manera:
+
+- Capa de Cliente:
+Esta capa es la componentes con la que interactúan los usuarios finales. En este caso, se presentan dos componentes principales: una para dispositivos móviles y otra para PC.
+
+- Capa de Negocio:
+Aquí se encuentra la lógica principal de la aplicación.
+
+- Capa de Acceso a Base de Datos:
+Esta capa se encarga de interactuar con la base de datos.
+
+- Capa de Seguridad:
+Aquí se gestionan aspectos como la autenticación, autorización, etc.

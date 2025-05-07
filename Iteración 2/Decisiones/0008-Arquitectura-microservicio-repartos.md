@@ -14,11 +14,8 @@ El servicio de Repartos es responsable de organizar la entrega de los pedidos re
 
 ## Drivers de Decisión
 
-* RF-04: Visualización del estado del pedido.
-* RF-06: Confirmación del estado de entrega.
-* RF-07: Gestión de incidencias.
-* RD-01: Escalabilidad y disponibilidad.
-* RD-05: Arquitectura basada en microservicios.
+* RF-04: Gestionar el reparto y las rutas de los camiones
+* RF-05: Mostrar estadísticas del estado de los pedidos, la situación de los camiones y el estado del pedido
 
 ---
 
@@ -43,7 +40,7 @@ El servicio de Repartos es responsable de organizar la entrega de los pedidos re
 
 **Chosen option: "0008-2 - Microservicio de Repartos con responsabilidad propia"**
 
-Se implementará un microservicio independiente para Repartos que gestionará internamente las rutas, la asignación de camiones, y la trazabilidad de entregas. Se comunicará con los servicios de Pedidos, Incidencias y Notificaciones mediante eventos de dominio.
+Se implementará un microservicio independiente para Repartos que gestionará internamente las rutas (gestorRutas), la asignación de camiones, y la trazabilidad de entregas. Se comunicará con los servicios de Pedidos, Incidencias y Notificaciones mediante eventos de dominio.
 
 ---
 
@@ -74,10 +71,8 @@ Se implementará un microservicio independiente para Repartos que gestionará in
 - `AsignacionEntrega`: representa la relación entre pedido, camión y ruta.
   - **Necesaria para** coordinar pedidos concretos con su logística.
 
-- `GestorRutas`: servicio responsable de asignar camiones y rutas a los pedidos pendientes.
+- `GestorRutas`: clase responsable de asignar camiones y rutas a los pedidos pendientes, integrando el algoritmo de rutas.
   - **Necesaria porque** encapsula la lógica de planificación logística.
 
-- `IncidenciaReparto` (posiblemente como subclase de `Incidencia` general):
-  - **Necesaria para** registrar fallos o problemas ocurridos durante la entrega (averías, retrasos, desvíos…).
-
+- `EstadisticasPedido`: clase que permite consultar las diferentes estadísticas sobre los pedidos.
 ---
