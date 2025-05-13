@@ -8,7 +8,7 @@
 
 ---
 
-## Contexto y Declaración del Problema
+## Context and Problem Statement
 
 Como parte de la migración de una arquitectura monolítica a microservicios, es necesario elegir un **sistema de gestión de bases de datos SQL (RDBMS)** adecuado. La nueva arquitectura requiere bases de datos independientes por servicio (Database-per-Service), transacciones consistentes, y buen rendimiento en operaciones concurrentes.
 
@@ -23,29 +23,35 @@ Como parte de la migración de una arquitectura monolítica a microservicios, es
 
 ---
 
-## Opciones Consideradas
+## Considered Options
+* **0007-1-PostgreSQL**
+* **0007-2-MySQL**
+* **0007-3-SQL Server**
 
-### **DBMS-1: PostgreSQL**
+
+## Pros and Cons of the Options
+
+### 0007-1-PostgreSQL
 - **Bueno:** Madurez, potencia y soporte completo de características SQL.
 - **Bueno:** Ideal para microservicios, transacciones complejas, datos relacionales.
 - **Bueno:** Compatibilidad con herramientas modernas (Docker, ORM, CI/CD).
 - **Malo:** Curva de aprendizaje inicial mayor que MySQL.
 
-### **DBMS-2: MySQL**
+### 0007-2-MySQL
 - **Bueno:** Muy usado, fácil de configurar.
 - **Malo:** Menor soporte para operaciones complejas (ej. subconsultas avanzadas).
 - **Malo:** Peor rendimiento en concurrencia elevada (dependiendo del motor).
 
-### **DBMS-3: SQL Server**
+### 0007-3-SQL Server
 - **Bueno:** Integración nativa con tecnologías Microsoft.
 - **Malo:** Requiere licencia, menos flexible para contenedores.
 
 ---
 
-## Decisión Final
+## Decision Outcome
 
-**Elegido:** `PostgreSQL`  
-Se selecciona **PostgreSQL** como gestor SQL principal para los microservicios debido a su fiabilidad, riqueza funcional, escalabilidad y soporte en entornos modernos de desarrollo distribuido.
+**Chosen option: "0007-1-PostgreSQL"**
+Se selecciona PostgreSQL como gestor SQL principal para los microservicios debido a su fiabilidad, riqueza funcional, escalabilidad y soporte en entornos modernos de desarrollo distribuido.
 
 ---
 
