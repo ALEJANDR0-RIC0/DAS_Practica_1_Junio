@@ -91,23 +91,11 @@ Alinea con la arquitectura de microservicios existente, Permite usar PostgreSQL 
 ## Capa de Consumo de Eventos
 1. `EventConsumer` - Escucha y procesa eventos de Kafka
 
-## Capa de Procesamiento
-2. `StatsProcessor` - Lógica principal de cálculo de estadísticas
-
-## Capa de Consulta
-3. `StatsController` - Expone endpoints REST para consultas
-
-## Capa de Almacenamiento
-4. `StatsRepository` - Acceso a datos en PostgreSQL
-
-## Capa de Caché
-5. `CacheService` - Gestiona datos en Redis
+## Clase para consultar
+3. `StatsController` - Expone endpoints REST para consultas y procesamiento de estadísticas.
 
 ## Modelos de Datos
-6. `PedidoStats` - Modelo para estadísticas de pedidos
-7. `CamionStats` - Modelo para estadísticas de camiones
-8. `RepartoStats` - Modelo para estadísticas de repartos
+6. `RepartosStats` - Modelo para estadísticas de pedidos y repartos
 
 ## DTOs (Data Transfer Objects)
 9. `StatsResponseDTO` - Estructura de respuesta para API
-10. `TimeRangeDTO` - Para consultas por intervalos de tiempo
