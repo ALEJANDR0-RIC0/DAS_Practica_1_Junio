@@ -61,7 +61,7 @@ Ya que garantiza desacoplamiento, personalización y escalabilidad. Este servici
 
 - `Noticia`: contiene `id`, `titulo`, `contenido`, `tipo`, `fecha`, `origen` (ej. Pedido, Reparto, Incidencia).
 - `Suscripcion`: asocia un `clienteId` con tipos de noticias (`PEDIDO`, `REPARTO`).
-- `NoticiasService`: clase de servicio que:
+- `ServicioNoticias`: clase de servicio que:
   - Escucha eventos relevantes desde otros servicios.
   - Genera objetos `Noticia` y los almacena.
 
