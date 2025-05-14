@@ -89,7 +89,7 @@ Alinea con la arquitectura de microservicios existente, Permite usar PostgreSQL 
 # Clases Propuestas
 
 ## Capa de Consumo de Eventos
-1. `EventConsumer` - Escucha y procesa eventos de Kafka
+1. `EventConsumer` - Escucha y procesa eventos de Kafka, se importa como componente Apache Kafka 2.4.1.1. para poder comunicar información al microservicio de noticias.
 
 ## Clase para consultar
 3. `StatsController` - Expone endpoints REST para consultas y procesamiento de estadísticas.
