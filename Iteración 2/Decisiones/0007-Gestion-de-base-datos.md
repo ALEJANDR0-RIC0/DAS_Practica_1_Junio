@@ -50,7 +50,7 @@ Como parte de la migración de una arquitectura monolítica a microservicios, es
 ## Decision Outcome
 
 **Chosen option: "0007-1-PostgreSQL"**
-Se selecciona PostgreSQL como gestor SQL principal para los microservicios debido a su fiabilidad, riqueza funcional, escalabilidad y soporte en entornos modernos de desarrollo distribuido.
+Se selecciona PostgreSQL como gestor SQL principal para los microservicios debido a su fiabilidad, riqueza funcional, escalabilidad y soporte en entornos modernos de desarrollo distribuido. Se empleará el componente 17.5 (latest)
 
 ---
 
