@@ -21,9 +21,9 @@ El sistema necesita mostrar estadísticas en tiempo real sobre:
 ## Drivers de Decisión  
 
 * **RF-05:** Mostrar estadísticas a clientes y empleados.  
-* **NF-01:** Baja latencia (<500ms) en consultas.  
-* **NF-02:** Escalabilidad independiente de servicios base.  
-* **NF-03:** Consistencia eventual aceptable (máx. 1 min de desfase).  
+* **RD-02:** Seguridad en acceso de clientes y sistema de pago. 
+* **RD-03:** Sistema de pago seguro utilizando Stripe.  
+* **RD-04:** La arquitectura deberá contar necesariamente con microservicios.  
 
 ---
 

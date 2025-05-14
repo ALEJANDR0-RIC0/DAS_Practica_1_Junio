@@ -16,10 +16,9 @@ Como parte de la migración de una arquitectura monolítica a microservicios, es
 
 ## Drivers de Decisión
 
-- **RF-01:** Soporte completo de SQL estándar y operaciones ACID.
-- **NF-02:** Alta disponibilidad y soporte para entornos Docker/Kubernetes.
-- **NF-03:** Escalabilidad horizontal mediante instancias independientes.
-- **NF-04:** Comunidad activa y buena documentación.
+- **RF-02.2:**  Acceder a los datos de los pedidos.
+- **RF-02.1:** Acceder a los datos personales de los clientes.
+- **RF-02:** Acceder a los datos de los pedidos.
 
 ---
 
