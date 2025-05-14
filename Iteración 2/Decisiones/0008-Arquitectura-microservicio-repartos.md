@@ -25,7 +25,7 @@ El servicio de Repartos es responsable de organizar la entrega de los pedidos re
 * **Good**: Evita duplicación de datos.
 * **Bad**: Aumenta el acoplamiento, dificulta la escalabilidad y separación de responsabilidades.
 
-### 0008-2: Microservicio de Repartos con responsabilidad propia
+### 0008-2: Paquete con la lógica Repartos con responsabilidad propia
 * **Good**: Desacopla la lógica logística del pedido.
 * **Good**: Permite especialización, escalabilidad y evolución independiente.
 * **Bad**: Requiere sincronización con otros servicios vía eventos.
@@ -38,9 +38,9 @@ El servicio de Repartos es responsable de organizar la entrega de los pedidos re
 
 ## Decision Outcome
 
-**Chosen option: "0008-2 - Microservicio de Repartos con responsabilidad propia"**
+**Chosen option: "0008-2 - Paquete con la lógica Repartos y responsabilidad propia"**
 
-Se implementará un microservicio independiente para Repartos que gestionará internamente las rutas (gestorRutas), la asignación de camiones, y la trazabilidad de entregas. Se comunicará con los servicios de Pedidos, Incidencias y Notificaciones mediante eventos de dominio.
+Se implementará un paquete para Repartos que gestionará internamente las rutas (gestorRutas), la asignación de camiones, y la trazabilidad de entregas. Se comunicará con los servicios de Pedidos, Incidencias y Notificaciones mediante eventos de dominio. Se emplearan las clases Camion, (representa un vehiculo con matricula, capacidad, estado y localización y es necesaria para los recursos físicos de reparto), Ruta (Necesaria para contener el trayecto, las paradas y el estado), GestorRutas (Esta clase es responsable de asignar camiones y rutas a los pedidos pendientes, integrando el algoritmo de cálculo de rutas. Esta clase encapsula la lógica de planificación logística). Además, en este paquete también se encapsulan las estadística de pedido, para poder acceder en tiempo real a las estadísticas de los pedidos. En cuanto las asignaciones para saber a que camion le pertenece cada pedido, esta lógica se ha delegado a la base de datos aprovechando que es SQL. PostgreSQL emplea un esquema de tipo ROLAP, por lo que habrán relaciones de llaves primarias que podrán unir pedidos, camiones y rutas y así dejando la arquitectura más limpia.
 
 ---
 
@@ -58,21 +58,4 @@ Se implementará un microservicio independiente para Repartos que gestionará in
 * Requiere sincronización de datos y estados entre Pedidos y Repartos.
 * Aumenta la complejidad de coordinación entre servicios.
 
----
-
-## Clases que se añaden
-
-- `Camion`: representa un vehículo con matrícula, capacidad, estado y localización.
-  - **Necesaria para** gestionar los recursos físicos de reparto.
-
-- `Ruta`: contiene el trayecto, las paradas y el estado del recorrido asignado.
-  - **Necesaria para** planificar y monitorizar las entregas.
-
-- `AsignacionEntrega`: representa la relación entre pedido, camión y ruta.
-  - **Necesaria para** coordinar pedidos concretos con su logística.
-
-- `GestorRutas`: clase responsable de asignar camiones y rutas a los pedidos pendientes, integrando el algoritmo de rutas.
-  - **Necesaria porque** encapsula la lógica de planificación logística.
-
-- `EstadisticasPedido`: clase que permite consultar las diferentes estadísticas sobre los pedidos.
 ---
