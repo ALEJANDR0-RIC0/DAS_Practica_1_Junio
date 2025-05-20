@@ -54,16 +54,9 @@ El microservicio de Noticias es responsable de gestionar las suscripciones de lo
 
 **Chosen option: "0003-3-Microservicio independiente con suscripción y persistencia"**
 Ya que garantiza desacoplamiento, personalización y escalabilidad. Este servicio se alimenta de eventos publicados por otros microservicios y expone una API REST para la gestión de preferencias del cliente.
+Las clases del microservicio se encargan de asociar un clienteId con tipos de noticias ('PEDIDO', 'REPARTO'), escuchar eventos desde otros servicios y generar Objetos 'Noticia' y almacenarlos.
 
 ---
-
-## Clases del Microservicio
-
-- `Noticia`: contiene `id`, `titulo`, `contenido`, `tipo`, `fecha`, `origen` (ej. Pedido, Reparto, Incidencia).
-- `Suscripcion`: asocia un `clienteId` con tipos de noticias (`PEDIDO`, `REPARTO`).
-- `ServicioNoticias`: clase de servicio que:
-  - Escucha eventos relevantes desde otros servicios.
-  - Genera objetos `Noticia` y los almacena.
 
 
 ### Positive Consequences
