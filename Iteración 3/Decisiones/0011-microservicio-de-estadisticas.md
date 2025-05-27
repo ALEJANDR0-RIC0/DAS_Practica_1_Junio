@@ -1,101 +1,76 @@
-# Microservicio de Estadísticas  
-* Status: Accepted  
-* Date: 07/05/2025  
-* Decision-Makers: Alejandro Rico, Daniel Rong  
-* Consulted: Gaizka Aranbarri, Elena Ceinos
-* Informed: Jon Mazcuñán, Pablo Villamayor, Alberto Acebes  
+# Microservicio de Estadísticas
 
+* Status: Accepted  
+* Date: 27/05/2025  
+* Decision-Makers: Alejandro Rico, Elena Ceinos  
+* Consulted: Gaizka Aranbarri, Alberto Acebes  
+* Informed: Jon Mazcuñán, Pablo Villamayor  
 ---
 
-## Context and Problem Statement  
+## Context and Problem Statement
 
-El sistema necesita mostrar estadísticas en tiempo real sobre:  
+El sistema necesita mostrar estadísticas en tiempo real sobre:
 - Estado de pedidos (completados, en proceso, retrasados).  
 - Situación de camiones (ubicación, rutas activas, incidencias).  
-- Históricos para análisis (tendencias, eficiencia logística).  
+- Históricos para análisis (tendencias, eficiencia logística).
 
-**Problema:** ¿Cómo implementar esta funcionalidad manteniendo escalabilidad, bajo acoplamiento y sin impactar servicios críticos?  
+## Drivers de decisión
 
----
+* RF-05: Mostrar estadísticas a clientes y empleados.  
+* RD-03: Sistema de pago seguro utilizando Stripe.  
 
-## Drivers de Decisión  
+## Considered Options
 
-* **RF-05:** Mostrar estadísticas a clientes y empleados.  
-* **RD-02:** Seguridad en acceso de clientes y sistema de pago. 
-* **RD-03:** Sistema de pago seguro utilizando Stripe.  
-* **RD-04:** La arquitectura deberá contar necesariamente con microservicios.  
+* **EST-1: Estadísticas embebidas en microservicio de Pedidos/Repartos**  
+* **EST-2: Microservicio independiente con base de datos analítica**  
+* **EST-3: Solución externa (Power BI, Google Analytics)**  
 
----
+## Pros and Cons of the Options
 
-## Considered Options  
+## Pros and Cons of the Options
 
-### **EST-1: Estadísticas embebidas en microservicio de Pedidos/Repartos**  
-* **Good:** Minimiza duplicación de datos.  
-* **Bad:** Degrada rendimiento de servicios críticos.  
+### EST-1: Estadísticas embebidas en microservicio de Pedidos/Repartos  
+* **Good** porque minimiza la duplicación de datos.  
+* **Good** porque simplifica el número de microservicios, reduciendo la cantidad de componentes en el diagrama UML.  
+* **Bad** porque degrada el rendimiento de servicios críticos al añadirles lógica analítica no esencial.  
+* **Bad** porque rompe el principio de responsabilidad única (SRP), acoplando lógica de negocio y lógica analítica.  
+* **Bad** porque dificulta la escalabilidad individual del servicio de estadísticas.  
+* **Bad** porque reduce la modularidad en el UML, complicando futuras ampliaciones o refactorizaciones.
 
-### **EST-2: Microservicio independiente con base de datos analítica**  
-* **Good:** Escalabilidad dedicada y tecnologías optimizadas (PostgreSQL + Redis).  
-* **Bad:** Requiere sincronización vía eventos.  
+### EST-2: Microservicio independiente con base de datos analítica  
+* **Good** porque permite escalabilidad dedicada y tecnologías optimizadas (PostgreSQL).  
+* **Good** porque mantiene bajo acoplamiento, alineándose con la arquitectura de microservicios.  
+* **Good** porque es fácilmente representable como un microservicio autónomo en el diagrama UML.  
+* **Bad** porque requiere sincronización mediante eventos, lo que añade complejidad arquitectónica.  
+* **Bad** porque introduce consistencia eventual entre servicios, afectando la fiabilidad inmediata de los datos.  
+* **Bad** porque añade carga cognitiva en el UML al incorporar nuevos componentes, bases de datos y mecanismos de cacheo.
 
-### **EST-3: Solución externa (Power BI, Google Analytics)**  
-* **Good:** Visualización avanzada sin desarrollo.  
-* **Bad:** Coste elevado y dependencia externa.  
+### EST-3: Solución externa (Power BI, Google Analytics)  
+* **Good** porque ofrece visualización avanzada sin desarrollo interno.  
+* **Good** porque reduce el número de componentes implementados directamente en el sistema, simplificando el UML.  
+* **Good** porque puede modelarse claramente como un sistema externo desacoplado.  
+* **Bad** porque dificulta la integración con microservicios internos, lo que complica los flujos de datos en la arquitectura.  
 
----
+## Decision Outcome
 
-## Decision Outcome  
+* **Chosen option: "EST-2 - Microservicio independiente"**
 
-**Chosen option:** `EST-2 - Microservicio independiente`  
- 
-Alinea con la arquitectura de microservicios existente, Permite usar PostgreSQL (decisión 0007) con extensiones como `TimescaleDB` para series temporales, Integración limpia mediante eventos (Kafka/RabbitMQ). 
+La solución seleccionada alinea con la arquitectura basada en microservicios, permitiendo escalar el servicio de estadísticas de forma independiente. Se utilizará PostgreSQL con extensiones como TimescaleDB para gestionar series temporales, Redis para acelerar consultas frecuentes y Kafka para consumir eventos de Pedidos y Repartos.
 
-## Positive Outcomes  
+El microservicio de estadísticas estará compuesto por:
+- Un consumidor de eventos (`EventConsumer`) que capturará eventos de Kafka relacionados con pedidos y repartos.
+- Un controlador REST (`StatsController`) que ofrecerá una API para empleados y clientes con estadísticas personalizadas.
+- Un modelo de datos (`RepartosStats`) para almacenar y consultar la información analítica de pedidos y entregas.
+- Un DTO (`StatsResponseDTO`) como estructura de respuesta de la API pública.
 
-1. **Alta escalabilidad**  
-   - El servicio puede escalar independientemente de los microservicios críticos (Pedidos/Repartos).  
-   - Soporta picos de consultas mediante Redis y vistas materializadas.  
+## Positive Consequences
 
-2. **Experiencia de usuario mejorada**  
-   - Datos en tiempo real (<1s para métricas cacheadas).  
-   - Interfaz unificada para clientes y empleados.  
+* El servicio puede escalar de forma independiente, sin afectar a los módulos críticos como Pedidos o Repartos.  
+* Refuerza la arquitectura modular al añadir un microservicio desacoplado que se representa claramente en el UML.  
+* Permite la reutilización del microservicio desde otros módulos (ej. marketing, logística) sin impacto directo en el core.
 
-3. **Flexibilidad analítica**  
-   - Permite añadir fácilmente nuevas KPIs (ej: "tiempo promedio de entrega por región").  
-   - Soporta futuras integraciones con herramientas BI (Power BI, Tableau).  
+## Negative Consequences
 
-4. **Resiliencia**  
-   - Fallos en el servicio de Estadísticas no afectan a los procesos core.  
-   - Recuperación rápida gracias a eventos almacenados en Kafka.  
+* Aumenta el número de componentes en la arquitectura, lo que puede hacer el sistema más difícil de desplegar y mantener.  
+* El crecimiento del diagrama UML puede dificultar su interpretación si no se organiza correctamente por dominios o capas.
 
----
-
-## Negative Outcomes  
-
-1. **Consistencia eventual**  
-   - Los datos pueden tener un desfase de hasta 1 minuto (dependiendo de la configuración de Kafka).  
-
-2. **Coste operacional**  
-   - Requiere recursos adicionales (PostgreSQL analítico, Redis, Kafka).  
-   - Complejidad en el mantenimiento de vistas materializadas.  
-
-3. **Curva de aprendizaje**  
-   - El equipo necesita formación en patrones CQRS y optimización de consultas analíticas.  
-
-4. **Sobrecarga de eventos**  
-   - Alto volumen de eventos puede saturar el sistema si no se filtra adecuadamente.  
-
----
-
-# Clases Propuestas
-
-## Capa de Consumo de Eventos
-1. `EventConsumer` - Escucha y procesa eventos de Kafka, se importa como componente Apache Kafka 2.4.1.1. para poder comunicar información al microservicio de noticias.
-
-## Clase para consultar
-3. `StatsController` - Expone endpoints REST para consultas y procesamiento de estadísticas.
-
-## Modelos de Datos
-6. `RepartosStats` - Modelo para estadísticas de pedidos y repartos
-
-## DTOs (Data Transfer Objects)
-9. `StatsResponseDTO` - Estructura de respuesta para API
